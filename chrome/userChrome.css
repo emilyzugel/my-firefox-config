@@ -113,7 +113,7 @@
   flex: auto !important;
 }
 
-
+/* Changes homepage background color */
 @-moz-document url(about:home), url(about:newtab), url(about:privatebrowsing) {
     .click-target-container *, .top-sites-list * {
         /*color: #fff !important ;
