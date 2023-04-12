@@ -1,33 +1,114 @@
-/* Make urlbar appear more compact */
-#urlbar[breakout]{
-  margin-inline-start: 0px !important;
-  width: 100% !important;
-  left: 0 !important;
-  top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2 ) !important;
+:root[titlepreface=""] #titlebar {
+  visibility: collapse !important;
 }
-#urlbar[breakout]:not([open]){
-  bottom: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
+
+:root[titlepreface=""] #nav-bar {
+  position: absolute !important;
+  
 }
-.urlbarView{
-  margin-inline: 0 !important;
-  width: auto !important;
+
+
+/*---+---+---+---+---+---+---+
+ |             HIDE           |
+ +---+---+---+---+---+---+---*/
+
+/* remove window control buttons */
+.titlebar-buttonbox-container { display: none !important; }
+
+#home-button              {display: none !important;}
+#forward-button           {display: none !important;}
+#back-button              {display: none !important;}
+#PanelUI-menu-button      {display: none !important;}
+#urlbar-zoom-button       {display: none !important;}
+#tabs-newtab-button       {display: none !important;}
+#alltabs-button           {display: none !important;}
+#new-tab-button           {display: none !important;}
+#nav-bar-overflow-button  {display: none !important;}
+
+/* toggle some items for config... get regular view */
+:root[titlepreface="regular"] #home-button              {display: block !important;}
+:root[titlepreface="regular"] #forward-button           {display: block !important;}
+:root[titlepreface="regular"] #back-button              {display: block !important;}
+:root[titlepreface="regular"] #PanelUI-menu-button      {display: block !important;}
+:root[titlepreface="regular"] #urlbar-zoom-button       {display: block !important;}
+:root[titlepreface="regular"] #tabs-newtab-button       {display: block !important;}
+:root[titlepreface="regular"] #alltabs-button           {display: block !important;}
+:root[titlepreface="regular"] #new-tab-button           {display: block !important;}
+:root[titlepreface="regular"] #nav-bar-overflow-button  {display: block !important;}
+:root[titlepreface="regular"] #nav-bar {width: 100vw;}
+:root[titlepreface="regular"] #titlebar {width: 100vw;}
+
+/* Changes the layout properties to flex, and removes bottom border */
+#navigator-toolbox { 
+  display: flex; 
+  flex-wrap: wrap; 
+  border: none !important;}
+
+:root {
+  /*  Width of the URL Bar for the Oneline layout
+   *  If enabled the max-width is applied on focus
+   *  otherwise the URL Bar will always be it's min-width
+   */ --uc-urlbar-width: 32px;
+
 }
-.urlbarView-row{
-  padding: 0 2px !important;
+
+
+
+/*   toolbarbutton-1 unified-extensions-item-action subviewbutton panel-no-padding webextension-browser-action*/
+/* main nav with url bar hidden behind tab bar. The overflow url shows up is search icon or cmd + L is pressed */
+#nav-bar {
+  order: 0;
+  width: var(--uc-urlbar-width);
+  background-color: #181825 !important;
 }
-.urlbarView-row-inner{
-  padding-inline-start: 4px !important;
+
+/* Actually the tab bar */
+#titlebar {
+  order: 1;
+  width: calc(100vw - var(--uc-urlbar-width) - 1px);
+  font-size: 0.8rem;
 }
-#urlbar-background{
-  animation: none !important;
+
+.tab-background{
+  background-color:#181825 !important;
 }
-#urlbar-input-container{
-  padding: 0px 1px !important;
-  height: initial !important; 
+
+/* Bookmark / extensions toolbar */
+#PersonalToolbar {
+  order: 2;
+  width: 100%;
+  background-color: var(--lwt-accent-color) !important;
+  z-index: 1 !important;
 }
-#identity-icon{
-  margin-block: var(--urlbar-icon-padding);
+
+/* Sets the size of the url/search promt to 80% of window */
+#navigator-toolbox:focus-within #urlbar { 
+  width: 80vw !important; 
 }
-.urlbarView > .search-one-offs:not([hidden]){
-  padding-block: 0px !important;
+
+ /* Sets the background of url input to the same as tab bar */
+#urlbar-background,
+#searchbar {
+  background-color: #181825 !important;
+  background-clip: border-box;
+  border: none !important;
+  border-radius: none !important;
+  box-shadow: none !important;
+}
+
+
+/* Removes border from urlbar when opening new tab */
+#urlbar[focused="true"]:not([suppress-focus-border]) > #urlbar-background,
+#searchbar:focus-within {
+  outline: none !important;
+}
+
+/* Removes the left and right spaces in tab bar */
+.titlebar-spacer{
+  display: none !important; 
+}
+
+/* fixes the customize window sizing */
+#customization-panel-container {
+  flex: auto !important;
 }
