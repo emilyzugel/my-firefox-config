@@ -1,13 +1,22 @@
 @-moz-document url(chrome://browser/content/browser.xul), url(about:newtab), url(about:home),url(about:privatebrowsing) {  
+    /* Changes the logo on the private browsing home screen */
+    html .logo {
+	    background-image: url("./foxlogo.svg") !important;
+    }
+
+    html .wordmark {
+      background-image: url("");
+    }
+    
     body{
         --newtab-background-color: #181825 !important;
         --newtab-background-color-secondary: transparent !important;
     }
 
-    /* removing watermark and logo */
+    /* removing watermark and logo
     .logo-and-wordmark{
         opacity: 0;
-    }
+    }*/
 
     #searchSuggestionTable{
         opacity: 0;
