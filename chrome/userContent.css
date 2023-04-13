@@ -1,7 +1,5 @@
 @-moz-document url(chrome://browser/content/browser.xul), url(about:newtab), url(about:home),url(about:privatebrowsing) {  
     body{
-        background-size: cover !important;
-        background-image: url("components/wallpaper.png")!important;
         --newtab-background-color: #181825 !important;
         --newtab-background-color-secondary: transparent !important;
     }
