@@ -121,14 +121,15 @@
             } else if (query.startsWith('yt ')) {
                 const searchTerm = query.slice(3);  
                 url = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchTerm)}`;
-            } else if (query.startsWith('gpt ')) {
-                const searchTerm = query.slice(4);  
-                url = `https://chat.openai.com/?query=${encodeURIComponent(searchTerm)}`;
+            } else if (query === 'gpt') {
+                url = `https://chat.openai.com/`;
             } else if (query.startsWith('gh ')) {
                 const searchTerm = query.slice(3);  
                 url = `https://github.com/search?q=${encodeURIComponent(searchTerm)}`;
+            } else if (query === 'wpp'){ 
+                url = `https://web.whatsapp.com`;
             } else {
-                const searchTerm = query.slice(3);  
+                const searchTerm = query.slice(3); 
                 url = `https://duckduckgo.com/?q=${encodeURIComponent(searchTerm)}`;
             }
 
