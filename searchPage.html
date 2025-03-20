@@ -108,8 +108,10 @@
                 const searchTerm = query.slice(3);  // Remove o "gh "
                 url = `https://github.com/search?q=${encodeURIComponent(searchTerm)}`; // Pesquisa no GitHub
             } else {
-                alert("Comando não reconhecido. Tente 'g', 'dd', 'yt', 'gpt' ou 'gh'.");
-                return;
+                //alert("Comando não reconhecido. Tente 'g', 'dd', 'yt', 'gpt' ou 'gh'.");
+                //return;
+                const searchTerm = query.slice(3);  // Remove o "dd "
+                url = `https://duckduckgo.com/?q=${encodeURIComponent(searchTerm)}`;
             }
 
             // Redireciona para a URL de pesquisa
