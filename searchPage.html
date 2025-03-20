@@ -5,7 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+        /* Definindo as cores como variáveis */
+        :root {
+            --crust: #11111b;
+            --mantle: #181825;
+            --base: #1e1e2e;
+            --surface0: #313244;
+            --surface1: #45475a;
+            --surface2: #585b70;
+            --overlay0: #6c7086;
+            --overlay1: #7f849c;
+            --overlay2: #9399b2;
+            --subtext0: #a6adc8;
+            --subtext1: #bac2de;
+            --text: #cdd6f4; /* A cor do texto */
+            --lavender: #b4befe;
+            --blue: #89b4fa;
+        }
+
         body {
             font-family: 'JetBrains Mono', monospace;
             display: flex;
@@ -13,24 +30,26 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            color: #cdd6f4;
-            background-color: #313244;
+            color: var(--text);
+            background-color: var(--surface0);
         }
+
         .search-container {
             display: flex;
             text-align: center;
             justify-content: flex-start;
-            color: #cdd6f4;
+            width: 65vw;
+            padding: 10px;
+            color: var(--text);
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 20px;  
             font-family: 'JetBrains Mono', monospace;
             background-color: rgba(255, 255, 255, 0.1);
 
-            /* Backdrop-filter Glass Effect */
             backdrop-filter: blur(8px);  
-            -webkit-backdrop-filter: blur(8px); /* Para compatibilidade no Safari */
+            -webkit-backdrop-filter: blur(8px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
+            transition: all 0.3s ease; /* Suaviza a transição */
         }
 
         .icon-container{
@@ -40,32 +59,38 @@
         .search-icon {
             position: absolute;
             left: 0.75rem; 
-            padding-right: 2.5rem;
             top: 50%;
             transform: translateY(-50%);
-            color: rgba(156, 163, 175, 1); /* Cor do ícone */
+            color: var(--text); /* Cor do ícone no estado inicial */
+            transition: color 0.3s ease; /* Transição suave para a cor do ícone */
         }
 
-        input{
+        input {
             font-size: 16px;
-            color: #cdd6f4;
+            color: var(--text); /* Cor do texto dentro do input */
             background-color: transparent;
             border: none;
             border-radius: 20px; 
             outline: none;
-            width: 30vw;
-        }
-
-        input[type="text"] {
-            padding: 2vh;
-            width: 65vh;
-            font-size: 16px;
+            width: 100%;
+            height: 100%;
+            transition: color 0.3s ease, border-color 0.3s ease; /* Transição suave para o foco */
         }
 
         input[type="text"]:focus {
-            border-color: #fff; 
-            outline: none; 
+            color: var(--text); /* Quando em foco, o texto fica na cor --text */
+            border-color: var(--text); /* Quando em foco, a borda também muda para --text */
+            outline: none;
         }
+
+        .search-container:focus-within .search-icon {
+            color: var(--text); /* Muda a cor do ícone quando o input está em foco */
+        }
+
+        .search-container:focus-within {
+            border-color: var(--text); /* Muda a cor da borda do container quando o input está em foco */
+        }
+
     </style>
 </head>
 <body>
@@ -88,29 +113,22 @@
 
             // Verifica o comando e cria o link de pesquisa
             if (query.startsWith('g ')) {
-                // Pesquisa no Google
-                const searchTerm = query.slice(2);  // Remove o "g "
+                const searchTerm = query.slice(2);  
                 url = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
             } else if (query.startsWith('dd ')) {
-                // Pesquisa no DuckDuckGo
-                const searchTerm = query.slice(3);  // Remove o "dd "
+                const searchTerm = query.slice(3);  
                 url = `https://duckduckgo.com/?q=${encodeURIComponent(searchTerm)}`;
             } else if (query.startsWith('yt ')) {
-                // Pesquisa no YouTube
-                const searchTerm = query.slice(3);  // Remove o "yt "
+                const searchTerm = query.slice(3);  
                 url = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchTerm)}`;
             } else if (query.startsWith('gpt ')) {
-                // Redireciona para o ChatGPT
-                const searchTerm = query.slice(4);  // Remove o "gpt "
+                const searchTerm = query.slice(4);  
                 url = `https://chat.openai.com/?query=${encodeURIComponent(searchTerm)}`;
             } else if (query.startsWith('gh ')) {
-                // Pesquisa no GitHub
-                const searchTerm = query.slice(3);  // Remove o "gh "
-                url = `https://github.com/search?q=${encodeURIComponent(searchTerm)}`; // Pesquisa no GitHub
+                const searchTerm = query.slice(3);  
+                url = `https://github.com/search?q=${encodeURIComponent(searchTerm)}`;
             } else {
-                //alert("Comando não reconhecido. Tente 'g', 'dd', 'yt', 'gpt' ou 'gh'.");
-                //return;
-                const searchTerm = query.slice(3);  // Remove o "dd "
+                const searchTerm = query.slice(3);  
                 url = `https://duckduckgo.com/?q=${encodeURIComponent(searchTerm)}`;
             }
 
@@ -121,8 +139,19 @@
         // Adiciona um evento para quando a tecla Enter for pressionada
         document.getElementById('searchQuery').addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
-                search();  // Chama a função de pesquisa quando Enter é pressionado
+                search();
+            } else if (event.key === 'Escape') {
+                // Remove o foco do input quando Esc é pressionado
+                document.getElementById('searchQuery').blur();
             }
+        });
+        // Adiciona um evento no 'document' para ouvir qualquer tecla pressionada em qualquer lugar
+        document.addEventListener('keydown', function(event) {
+          if (event.key === 's') {
+              event.preventDefault();
+               // Dá foco ao input quando "s" for pressionado
+              document.getElementById('searchQuery').focus();
+          }
         });
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
