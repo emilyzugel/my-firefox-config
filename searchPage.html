@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #cdd6f4;
+            background-color: #313244;
+        }
+        .search-container {
+            display: flex;
+            text-align: center;
+            justify-content: flex-start;
+            color: #cdd6f4;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;  
+            font-family: 'JetBrains Mono', monospace;
+            background-color: rgba(255, 255, 255, 0.1);
+
+            /* Backdrop-filter Glass Effect */
+            backdrop-filter: blur(8px);  
+            -webkit-backdrop-filter: blur(8px); /* Para compatibilidade no Safari */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .icon-container{
+            padding-right: 50px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem; 
+            padding-right: 2.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(156, 163, 175, 1); /* Cor do ícone */
+        }
+
+        input{
+            font-size: 16px;
+            color: #cdd6f4;
+            background-color: transparent;
+            border: none;
+            border-radius: 20px; 
+            outline: none;
+            width: 30vw;
+        }
+
+        input[type="text"] {
+            padding: 2vh;
+            width: 65vh;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus {
+            border-color: #fff; 
+            outline: none; 
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+      <div class="icon-container">
+        <div class="search-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+        </div>
+      </div>
+      <input type="text" id="searchQuery" placeholder="Search: 'g', 'dd', 'yt', 'gpt' ou 'gh'" />
+    </div>
+
+    <script>
+        // Função para realizar a pesquisa
+        function search() {
+            const query = document.getElementById('searchQuery').value.trim().toLowerCase();
+            let url = '';
+
+            // Verifica o comando e cria o link de pesquisa
+            if (query.startsWith('g ')) {
+                // Pesquisa no Google
+                const searchTerm = query.slice(2);  // Remove o "g "
+                url = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
+            } else if (query.startsWith('dd ')) {
+                // Pesquisa no DuckDuckGo
+                const searchTerm = query.slice(3);  // Remove o "dd "
+                url = `https://duckduckgo.com/?q=${encodeURIComponent(searchTerm)}`;
+            } else if (query.startsWith('yt ')) {
+                // Pesquisa no YouTube
+                const searchTerm = query.slice(3);  // Remove o "yt "
+                url = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchTerm)}`;
+            } else if (query.startsWith('gpt ')) {
+                // Redireciona para o ChatGPT
+                const searchTerm = query.slice(4);  // Remove o "gpt "
+                url = `https://chat.openai.com/?query=${encodeURIComponent(searchTerm)}`;
+            } else if (query.startsWith('gh ')) {
+                // Pesquisa no GitHub
+                const searchTerm = query.slice(3);  // Remove o "gh "
+                url = `https://github.com/search?q=${encodeURIComponent(searchTerm)}`; // Pesquisa no GitHub
+            } else {
+                alert("Comando não reconhecido. Tente 'g', 'dd', 'yt', 'gpt' ou 'gh'.");
+                return;
+            }
+
+            // Redireciona para a URL de pesquisa
+            window.location.href = url;
+        }
+
+        // Adiciona um evento para quando a tecla Enter for pressionada
+        document.getElementById('searchQuery').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                search();  // Chama a função de pesquisa quando Enter é pressionado
+            }
+        });
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</body>
+</html>
